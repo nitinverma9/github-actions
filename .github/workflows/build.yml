@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+env:
+  AWS_REGION: "us-east-1"
+  IMAGE_REGISTRY_URL: "${{ secrets.AWS_ACCOUNT }}.dkr.ecr.$AWS_REGION.amazonaws.com/eks_images"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11.1
+
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github_action_iam_role
+        role-session-name: github-action-federated-access
+        aws-region: ${{ env.AWS_REGION }}
+    - name:  Docker login
+      run: |
+        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.$AWS_REGION.amazonaws.com
+
+    - name: Build Docker image
+      run: |
+        docker build -t my-python-image:${{ github.sha }}  -f app/Dockerfile .
+        docker tag my-python-image:${{ github.sha }} ${{ env.IMAGE_REGISTRY_URL }}:${{ github.sha }}
+        docker push ${{ env.IMAGE_REGISTRY_URL }}:${{ github.sha }}
