@@ -37,4 +37,12 @@ jobs:
       run: |
         docker build -t my-python-image:${{ github.sha }}  -f app/Dockerfile .
         docker tag my-python-image:${{ github.sha }} ${{ env.IMAGE_REGISTRY_URL }}:${{ github.sha }}
-        docker push ${{ env.IMAGE_REGISTRY_URL }}:${{ github.sha }}
+        docker tag my-python-image:${{ github.sha }} ${{ env.IMAGE_REGISTRY_URL }}:latest
+        docker push ${{ env.IMAGE_REGISTRY_URL }}:latest
+    - name: Install Helm Chart
+      uses: bitovi/github-actions-deploy-eks-helm@v1.2.4
+      with:
+        aws-region: ${{ env.aws-region }}
+        cluster-name: eksworkshop-eksctl
+        chart-path: helm/
+        name: sample-hello-world

@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.$AWS_REGION.amazonaws.com/rackerlabs/backstage
+  pullPolicy: IfNotPresent
+  tag: image_push
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: hello-world
+
+service:
+  type: ClusterIP
+  port: 80
