@@ -46,4 +46,4 @@ jobs:
         cluster-name: eksworkshop-eksctl
         chart-path: helm/
         name: sample-hello-world
-        values: IMAGE_REGISTRY_URL=${{ env.IMAGE_REGISTRY_URL }}
+        values: image.repository=${{ env.IMAGE_REGISTRY_URL }}

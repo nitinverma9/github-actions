@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: $IMAGE_REGISTRY_URL
+  repository: ""
   pullPolicy: IfNotPresent
   tag: latest
 
