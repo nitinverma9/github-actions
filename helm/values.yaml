@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.$AWS_REGION.amazonaws.com/rackerlabs/backstage
+  repository: $IMAGE_REGISTRY_URL
   pullPolicy: IfNotPresent
-  tag: image_push
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""
