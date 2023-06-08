@@ -42,7 +42,7 @@ jobs:
     - name: Install Helm Chart
       uses: bitovi/github-actions-deploy-eks-helm@v1.2.4
       with:
-        aws-region: ${{ env.aws-region }}
+        aws-region: ${{ env.AWS_REGION }}
         cluster-name: eksworkshop-eksctl
         chart-path: helm/
         name: sample-hello-world
