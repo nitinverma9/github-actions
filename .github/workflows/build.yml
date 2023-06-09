@@ -6,7 +6,7 @@ on:
       - main
 env:
   AWS_REGION: "us-east-1"
-  IMAGE_REGISTRY_URL: "${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/eks_images"
+  IMAGE_REGISTRY_URL: "${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/nitinverma9/testing-microservice"
 
 jobs:
   build:
