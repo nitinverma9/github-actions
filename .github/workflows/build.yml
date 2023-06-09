@@ -1,4 +1,4 @@
-name: CI
+name: New_Name
 
 on:
   push:
